@@ -4,16 +4,15 @@ const searchForm = document.querySelector('#search-form'); // поиск чер�
 const API_KEY = '9c464a059d368b1b6fa45ea91caad68b';
 
 function apiSearch(event) {
-  event.preventDefault();    // Отмена обновления страницы при submit
+    event.preventDefault();    // Отмена обновления страницы при submit
 
 
   const searchText = document.querySelector('.form-control').value, // Сохраняет только текст из инпута
-        server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
+    server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
       
       
-      requestApi('GET', server);
-      
-      }
+    requestApi('GET', server);
+}
 
 
 
@@ -23,15 +22,17 @@ function apiSearch(event) {
 // Обработчик события отправки формы
 searchForm.addEventListener('submit', apiSearch);
 
-
 // Функция получения данных из API
-function requestApi(url) {
+function requestApi(method, url) {
 
   const request = new XMLHttpRequest();
-
   request.open(method, url);
 
-  
+  request.send();
+
+  request.addEventListener('readystatechange', function() {
+    if (request.readyState === 4) return; // изменил jshitrc
+  });
 
 
 }
