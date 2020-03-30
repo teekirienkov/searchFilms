@@ -8,10 +8,12 @@ function apiSearch(event) {
 
 
   const searchText = document.querySelector('.form-control').value, // Сохраняет только текст из инпута
-        server = 'https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=&page=1&include_adult=true';
-  
-}
-
+        server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
+      
+      
+      requestApi('GET', server);
+      
+      }
 
 
 
@@ -24,5 +26,12 @@ searchForm.addEventListener('submit', apiSearch);
 
 // Функция получения данных из API
 function requestApi(url) {
+
+  const request = new XMLHttpRequest();
+
+  request.open(method, url);
+
+  
+
 
 }
