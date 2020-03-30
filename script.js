@@ -11,7 +11,7 @@ function apiSearch(event) {
     server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
       
       
-    requestApi('GET', server);
+    requestApi(server);
 }
 
 
@@ -23,16 +23,20 @@ function apiSearch(event) {
 searchForm.addEventListener('submit', apiSearch);
 
 // Функция получения данных из API
-function requestApi(method, url) {
+function requestApi(url) {
 
   const request = new XMLHttpRequest();
-  request.open(method, url);
-
+  request.open('GET', url);
   request.send();
 
   request.addEventListener('readystatechange', function() {
-    if (request.readyState === 4) return; // изменил jshitrc
+    if (request.readyState !== 4) return; // изменил jshitrc
+
+    if (request.status !== 200) {
+      console.log('Произошла ошибка:' + request.status);
+      return;
+    }
+
+    console.log(request);
   });
-
-
 }
