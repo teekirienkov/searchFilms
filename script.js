@@ -23,6 +23,7 @@ function apiSearch(event) {
 searchForm.addEventListener('submit', apiSearch);
 
 // Функция получения данных из API
+// В request.responseText - содержится описание и т.д.
 function requestApi(url) {
 
   const request = new XMLHttpRequest();
@@ -37,6 +38,8 @@ function requestApi(url) {
       return;
     }
 
-    console.log(request);
+    const output = JSON.parse(request.responseText); // Приводим JSON в нормальный вид
+
+    console.log(output);
   });
 }
