@@ -39,9 +39,23 @@ function requestApi(url) {
       return;
     }
 
+
+    // Парсим JSON файл
     const output = JSON.parse(request.responseText); // Приводим JSON в нормальный вид
 
-    console.log(output);
+    let inner = '';
+
+    // Перебираем массив и получаем названия фильмов/сериалов
+    // Выводится только название! (49-50 строка)
+    output.results.forEach(function (item) {
+      let nameItem = item.name || item.title;
+      console.log(nameItem);
+      inner = inner + '<div class="col-3">' + nameItem + '</div>';
+    });
+
+
+
+    movie.innerHTML = inner;
 
   });
 }
