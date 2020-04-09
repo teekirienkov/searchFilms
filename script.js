@@ -1,6 +1,7 @@
 // Получение элементов со страницы
 const searchForm = document.querySelector('#search-form'), // поиск через id
-      movie = document.querySelector('#movies');
+      movie = document.querySelector('#movies'),
+      urlPoster = 'https://image.tmdb.org/t/p/w500';
 
 const API_KEY = '9c464a059d368b1b6fa45ea91caad68b';
 
@@ -11,6 +12,9 @@ function apiSearch(event) {
   
   fetch(server)
     .then(function(value){
+      if (value.status !== 200) {
+        return Promise.reject();
+      }
       return value.json();
     })
     .then(function(output){
@@ -18,17 +22,19 @@ function apiSearch(event) {
         output.results.forEach(function (item) { // Перебираем массив и получаем названия фильмов/сериалов 
           let nameItem = item.name || item.title; // Выводится только название! (49-50 строка)
           console.log(nameItem);
-          inner = inner + '<div class="col-3">' + nameItem + '</div>';
+          inner += `
+          <div class="col-12 col-md-4 col-x1-3 item">
+          <img src="${urlPoster + item.poster_path}" alt="${nameItem}">
+          <h5>${nameItem}</h5>
+          </div>
+          `;
         });
         movie.innerHTML = inner;
     })
     .catch(function(reason){
-      console.log(`Ошибка: ${reason.status}`);
+      console.log(`Ошибка: ${reason}`);
     });
-  
-  
 }
 
 // Обработчик события отправки формы
 searchForm.addEventListener('submit', apiSearch);
-
