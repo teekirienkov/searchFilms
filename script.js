@@ -7,17 +7,12 @@ const API_KEY = '9c464a059d368b1b6fa45ea91caad68b';
 function apiSearch(event) {
   event.preventDefault();    // Отмена обновления страницы при submit
 
-
   const searchText = document.querySelector('.form-control').value, // Сохраняет только текст из инпута
         server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
       
       
     requestApi(server);
 }
-
-
-
-
 
 
 // Обработчик события отправки формы
@@ -33,13 +28,10 @@ function requestApi(url) {
 
   request.addEventListener('readystatechange', function() {
     if (request.readyState !== 4) return; // изменил jshitrc
-
     if (request.status !== 200) {
-      console.log('Произошла ошибка:' + request.status);
-      return;
+        console.log('Произошла ошибка:' + request.status);
+        return;
     }
-
-
     // Парсим JSON файл
     const output = JSON.parse(request.responseText); // Приводим JSON в нормальный вид
 
@@ -48,14 +40,11 @@ function requestApi(url) {
     // Перебираем массив и получаем названия фильмов/сериалов
     // Выводится только название! (49-50 строка)
     output.results.forEach(function (item) {
-      let nameItem = item.name || item.title;
-      console.log(nameItem);
-      inner = inner + '<div class="col-3">' + nameItem + '</div>';
+        let nameItem = item.name || item.title;
+        console.log(nameItem);
+        inner = inner + '<div class="col-3">' + nameItem + '</div>';
     });
 
-
-
     movie.innerHTML = inner;
-
-  });
+  }); // request.addEventListener
 }
