@@ -26,41 +26,9 @@ function apiSearch(event) {
       console.log(`Ошибка: ${reason.status}`);
     });
   
-  requestApi(server)
-    .then(function(result){
-        const output = JSON.parse(result); // Приводим JSON в нормальный вид 
-    })
-    .catch(function(reason){
-      console.log(`Ошибка: ${reason.status}`);
-    })
+  
 }
 
 // Обработчик события отправки формы
 searchForm.addEventListener('submit', apiSearch);
 
-// Функция получения данных из API
-// В request.responseText - содержится описание и т.д.
-function requestApi(url) {
-
-  return new Promise (function (resolve, reject){
-    const request = new XMLHttpRequest();
-    request.open('GET', url);
-
-    request.addEventListener('load', function() {
-      if (request.status !== 200) {
-        reject({
-          status: request.status
-        });
-        return;
-      } else {
-        resolve(request.response); // выполнение, в скобках передается ответ
-      }
-    });
-
-    request.addEventListener('error', function() {
-      reject({status: request.status});
-    })
-
-    request.send();
-  });
-};
