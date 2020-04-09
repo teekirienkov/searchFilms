@@ -2,9 +2,6 @@
 const searchForm = document.querySelector('#search-form'), // поиск через id
       movie = document.querySelector('#movies');
 
-
-
-
 const API_KEY = '9c464a059d368b1b6fa45ea91caad68b';
 
 function apiSearch(event) {
@@ -13,22 +10,21 @@ function apiSearch(event) {
         server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
   requestApi(server)
     .then(function(result){
-      const output = JSON.parse(result); // Приводим JSON в нормальный вид
-      let inner = '';
-      output.results.forEach(function (item) { // Перебираем массив и получаем названия фильмов/сериалов 
-        let nameItem = item.name || item.title; // Выводится только название! (49-50 строка)
-        console.log(nameItem);
-        inner = inner + '<div class="col-3">' + nameItem + '</div>';
-    });
+        const output = JSON.parse(result); // Приводим JSON в нормальный вид
+        let inner = '';
+        output.results.forEach(function (item) { // Перебираем массив и получаем названия фильмов/сериалов 
+          let nameItem = item.name || item.title; // Выводится только название! (49-50 строка)
+          console.log(nameItem);
+          inner = inner + '<div class="col-3">' + nameItem + '</div>';
+        });
     })
-    .catch(function(error){
-      console.log(error);
+    .catch(function(reason){
+      console.log(`Ошибка: ${reason.status}`);
     })
 }
 
 // Обработчик события отправки формы
 searchForm.addEventListener('submit', apiSearch);
-
 
 
 // Функция получения данных из API
@@ -41,7 +37,9 @@ function requestApi(url) {
 
     request.addEventListener('load', function() {
       if (request.status !== 200) {
-        reject({status: request.status});
+        reject({
+          status: request.status
+        });
         return;
       } else {
         resolve(request.response); // выполнение, в скобках передается ответ
