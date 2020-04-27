@@ -19,17 +19,18 @@ function apiSearch(event) {
     })
     .then(function(output){
       let inner = '';
-        output.results.forEach(function (item) { // Перебираем массив и получаем названия фильмов/сериалов 
-          let nameItem = item.name || item.title; // Выводится только название! (49-50 строка)
-          console.log(nameItem);
-          inner += `
+
+      output.results.forEach(function (item) { // Перебираем массив и получаем названия фильмов/сериалов 
+        let nameItem = item.name || item.title; // Выводится только название!
+        console.log(nameItem);
+        inner += `
           <div class="col-12 col-md-4 col-x1-3 item">
           <img src="${urlPoster + item.poster_path}" alt="${nameItem}">
           <h5>${nameItem}</h5>
-          </div>
-          `;
-        });
-        movie.innerHTML = inner;
+          </div>`;
+      });
+
+      movie.innerHTML = inner;
     })
     .catch(function(reason){
       console.log(`Ошибка: ${reason}`);
