@@ -44,12 +44,7 @@ function apiSearch(event) {
 
       movie.innerHTML = inner;
 
-      // Показ информации по клику на картинку
-      const media = movie.querySelectorAll('.item');
-
-      media.forEach(function(elem){
-        elem.addEventListener('click', showFullInfo);
-      });
+      addEventMedia();
     })
     .catch((reason) => {
       console.log(`Ошибка: ${reason}`);
@@ -59,6 +54,15 @@ function apiSearch(event) {
 // Обработчик события отправки формы
 searchForm.addEventListener('submit', apiSearch);
 
+function addEventMedia() {
+  // Показ информации по клику на картинку
+  const media = movie.querySelectorAll('img[data-id]');
+
+  media.forEach(function(elem){
+    elem.style.cursor = 'pointer';
+    elem.addEventListener('click', showFullInfo);
+  });
+}
 
 function showFullInfo() {
   console.log(this);
