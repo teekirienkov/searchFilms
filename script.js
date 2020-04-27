@@ -59,8 +59,29 @@ function addEventMedia() {
   });
 }
 
+// Функция показа полной информации
 function showFullInfo() {
-  console.log(this.dataset.type);
+  let url = ``;
+  if (this.dataset.type === 'movie') {
+    url = `https://api.themoviedb.org/3/movie/${this.dataset.id}?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru`;
+  } else if (this.dataset.type === 'tv') {
+    url = `https://api.themoviedb.org/3/tv/${this.dataset.id}?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru`;
+  } else {
+    movie.innerHTML = `<h2 class="col-12 text-center text-info">Произошла ошибка</h2>`;
+  }
+  fetch(url)
+    .then((value) => {
+      if (value.status !== 200) {
+        return Promise.reject();
+      }
+      return value.json(); // этот метод включен только в объектах request, response
+    })
+    .then((output) => {;
+      console.log(output);
+    })
+    .catch((reason) => {
+      console.error(`Ошибка: ${reason}`);
+    });
 }
 
 function ratingFilms() {
