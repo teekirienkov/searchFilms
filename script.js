@@ -78,6 +78,23 @@ function showFullInfo() {
     })
     .then((output) => {;
       console.log(output);
+      movie.innerHTML = `
+        <h4 class="col-10 text-center text-info">${output.name || output.title}</h4>
+          <div class="col-4">
+            <img src="${urlPoster + output.poster_path}" alt="${output.name || output.title}">
+            ${(output.homepage) ? `<p class='text-center'> <a href="${output.homepage}" target="_blank">Официальная страница</a> </p>` : ''}
+            ${(output.imdb_id) ? `<p class='text-center'> <a href="https://imdb.com/title/${output.imdb_id}" target="_blank">IMDB</a> </p>` : ''}
+            </div>
+
+          <div class="col-8">
+            <p>Рейтинг: ${output.vote_average}</p>
+            <p>Статус: ${output.status}</p>
+            <p>Премьера: ${output.release_date || output.first_air_date}</p>
+            ${(output.last_episode_to_air) 
+              ? `<p>Сезонов ${output.number_of_seasons},  серий ${output.last_episode_to_air.episode_number}</p>` 
+              : ''}
+            <p>Описание: ${output.overview}</p>
+          </div>`;
     })
     .catch((reason) => {
       console.error(`Ошибка: ${reason}`);
