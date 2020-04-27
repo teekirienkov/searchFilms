@@ -25,3 +25,7 @@ img {
 		transform: rotate(360deg);
 	}
 }
+
+.img_poster {
+	height: 360px;
+}

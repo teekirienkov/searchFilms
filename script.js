@@ -10,6 +10,9 @@ function apiSearch(event) {
   const searchText = document.querySelector('.form-control').value, // Сохраняет только текст из инпута
         server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
   
+  movie.innerHTML = `
+                      <div class="spinner">
+                      </div>`;
   fetch(server)
     .then((value) => {
       if (value.status !== 200) {
@@ -23,9 +26,11 @@ function apiSearch(event) {
       output.results.forEach(function (item) { // Перебираем массив и получаем названия фильмов/сериалов 
         let nameItem = item.name || item.title; // Выводится только название!
         
+        const noPoster = item.poster_path ? urlPoster + item.poster_path : 'img/withouth-poster.png';
+
         inner += `
           <div class="col-12 col-md-4 col-x1-3 item">
-          <img src="${urlPoster + item.poster_path}" alt="${nameItem}">
+          <img src="${noPoster}" class="img_poster" alt="${nameItem}">
           <h5>${nameItem}</h5>
           </div>`;
       });
