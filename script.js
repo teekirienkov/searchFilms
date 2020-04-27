@@ -1,7 +1,7 @@
 // Получение элементов со страницы
 const searchForm = document.querySelector('#search-form'), // поиск через id
       movie = document.querySelector('#movies'),
-      urlPoster = 'https://image.tmdb.org/t/p/w500';
+      urlPoster = 'https://image.tmdb.org/t/p/w342';
 
 const API_KEY = '9c464a059d368b1b6fa45ea91caad68b';
 
@@ -15,7 +15,7 @@ function apiSearch(event) {
       if (value.status !== 200) {
         return Promise.reject();
       }
-      return value.json();
+      return value.json(); // этот метод включен только в объектах request, response
     })
     .then(function(output){
       let inner = '';
