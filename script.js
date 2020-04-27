@@ -11,18 +11,18 @@ function apiSearch(event) {
         server = `https://api.themoviedb.org/3/search/multi?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru&query=' + ${searchText}`;
   
   fetch(server)
-    .then(function(value){
+    .then((value) => {
       if (value.status !== 200) {
         return Promise.reject();
       }
       return value.json(); // этот метод включен только в объектах request, response
     })
-    .then(function(output){
+    .then((output) => {
       let inner = '';
 
       output.results.forEach(function (item) { // Перебираем массив и получаем названия фильмов/сериалов 
         let nameItem = item.name || item.title; // Выводится только название!
-        console.log(nameItem);
+        
         inner += `
           <div class="col-12 col-md-4 col-x1-3 item">
           <img src="${urlPoster + item.poster_path}" alt="${nameItem}">
@@ -32,7 +32,7 @@ function apiSearch(event) {
 
       movie.innerHTML = inner;
     })
-    .catch(function(reason){
+    .catch((reason) => {
       console.log(`Ошибка: ${reason}`);
     });
 }
