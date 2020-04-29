@@ -61,7 +61,7 @@ function addEventMedia() {
 
 // Функция показа полной информации
 function showFullInfo() {
-  let url = ``;
+  let urlFullInfo = ``;
   if (this.dataset.type === 'movie') {
     url = `https://api.themoviedb.org/3/movie/${this.dataset.id}?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru`;
   } else if (this.dataset.type === 'tv') {
@@ -69,7 +69,7 @@ function showFullInfo() {
   } else {
     movie.innerHTML = `<h2 class="col-12 text-center text-info">Произошла ошибка</h2>`;
   }
-  fetch(url)
+  fetch(urlFullInfo)
     .then((value) => {
       if (value.status !== 200) {
         return Promise.reject();
@@ -160,9 +160,10 @@ function getVideo(type, id) {
       return value.json(); // этот метод включен только в объектах request, response
     })
     .then((output) => {
-      youtube.innerHTML = id;
+      youtube.innerHTML = 'Work';
     })
     .catch((reason) => {
+      movie.innerHTML = 'Видео отсутствует';
       console.error(reason);
     })
 }
