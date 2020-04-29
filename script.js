@@ -61,7 +61,7 @@ function addEventMedia() {
 
 // Функция показа полной информации
 function showFullInfo() {
-  let urlFullInfo = ``;
+  let url = ``;
   if (this.dataset.type === 'movie') {
     url = `https://api.themoviedb.org/3/movie/${this.dataset.id}?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru`;
   } else if (this.dataset.type === 'tv') {
@@ -69,7 +69,7 @@ function showFullInfo() {
   } else {
     movie.innerHTML = `<h2 class="col-12 text-center text-info">Произошла ошибка</h2>`;
   }
-  fetch(urlFullInfo)
+  fetch(url)
     .then((value) => {
       if (value.status !== 200) {
         return Promise.reject();
@@ -106,7 +106,7 @@ function showFullInfo() {
       getVideo(this.dataset.type, this.dataset.id);
     })
     .catch((reason) => {
-      console.error(`Ошибка: ${reason}`);
+      console.log(reason)
     });
 }
 
@@ -155,12 +155,18 @@ function getVideo(type, id) {
   fetch (urlVideo)
     .then((value) => {
       if (value.status !== 200) {
-        return Promise.reject();
+        return Promise.reject(new Error(value.status));
       }
       return value.json(); // этот метод включен только в объектах request, response
     })
     .then((output) => {
-      youtube.innerHTML = 'Work';
+      let videoFrame = `<h4 class="text-info">Видео</h4>`;
+
+      output.results.forEach((item) => {
+        videoFrame += `<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      });
+
+      youtube.innerHTML = videoFrame;
     })
     .catch((reason) => {
       movie.innerHTML = 'Видео отсутствует';
