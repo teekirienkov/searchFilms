@@ -160,7 +160,11 @@ function getVideo(type, id) {
       return value.json(); // этот метод включен только в объектах request, response
     })
     .then((output) => {
-      let videoFrame = `<h4 class="text-info">Видео</h4>`;
+      let videoFrame = `<h5 class="text-info">Трейлеры</h5>`;
+
+      if (output.results.length === 0) {
+        videoFrame = `<h5 class="text-info">Трейлеров нет</h5>`;
+      }
 
       output.results.forEach((item) => {
         videoFrame += `<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
@@ -169,7 +173,7 @@ function getVideo(type, id) {
       youtube.innerHTML = videoFrame;
     })
     .catch((reason) => {
-      movie.innerHTML = 'Видео отсутствует';
+      youtube.innerHTML = 'Трейлер отсутствует';
       console.error(reason);
     })
 }
