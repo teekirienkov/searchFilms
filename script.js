@@ -94,7 +94,16 @@ function showFullInfo() {
               ? `<p>Сезонов ${output.number_of_seasons},  серий ${output.last_episode_to_air.episode_number}</p>` 
               : ''}
             <p>Описание: ${output.overview}</p>
+
+            <br>
+
+            <div class="youtube">
+              
+            </div>
+
           </div>`;
+
+      getVideo(this.dataset.type, this.dataset.id);
     })
     .catch((reason) => {
       console.error(`Ошибка: ${reason}`);
@@ -137,3 +146,23 @@ function ratingFilms() {
 }
 
 document.addEventListener('DOMContentLoaded', ratingFilms);
+
+
+function getVideo(type, id) {
+  let youtube = movie.querySelector('.youtube');
+  let urlVideo = `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=9c464a059d368b1b6fa45ea91caad68b&language=ru`
+  
+  fetch (urlVideo)
+    .then((value) => {
+      if (value.status !== 200) {
+        return Promise.reject();
+      }
+      return value.json(); // этот метод включен только в объектах request, response
+    })
+    .then((output) => {
+      youtube.innerHTML = id;
+    })
+    .catch((reason) => {
+      console.error(reason);
+    })
+}
